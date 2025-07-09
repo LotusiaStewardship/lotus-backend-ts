@@ -1,0 +1,32 @@
+{
+  "name": "lotus-backend-ts",
+  "version": "0.1.0",
+  "description": "General backend services for the Lotusia ecosystem",
+  "main": ".output/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LotusiaStewardship/lotus-backend-ts.git"
+  },
+  "author": "Lotusia Stewardship",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LotusiaStewardship/lotus-backend-ts/issues"
+  },
+  "homepage": "https://github.com/LotusiaStewardship/lotus-backend-ts#readme",
+  "devDependencies": {
+    "@types/node": "24.0.12",
+    "prettier": "3.6.2",
+    "prisma": "6.11.1",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.36.0"
+  },
+  "dependencies": {
+    "@prisma/client": "6.11.1",
+    "bitcore-lib-xpi": "file:submodules/bitcore-lib-xpi",
+    "lotus-lib": "file:submodules/lotus-lib"
+  }
+}

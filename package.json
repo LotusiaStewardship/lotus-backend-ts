@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@prisma/client": "6.11.1",
+    "lotus-nng-client": "file:submodules/lotus-nng-client",
     "xpi-ts": "0.2.10"
   }
 }

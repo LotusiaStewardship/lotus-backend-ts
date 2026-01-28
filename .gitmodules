@@ -1,6 +1,0 @@
-[submodule "submodules/bitcore-lib-xpi"]
-	path = submodules/bitcore-lib-xpi
-	url = https://github.com/LotusiaStewardship/bitcore-lib-xpi
-[submodule "submodules/lotus-lib"]
-	path = submodules/lotus-lib
-	url = https://github.com/LotusiaStewardship/lotus-lib

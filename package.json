@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@prisma/client": "6.11.1",
-    "bitcore-lib-xpi": "file:submodules/bitcore-lib-xpi",
-    "lotus-lib": "file:submodules/lotus-lib"
+    "xpi-ts": "0.2.10"
   }
 }

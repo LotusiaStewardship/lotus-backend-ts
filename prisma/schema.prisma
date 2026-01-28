@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Stat {
+  id        String   @id @default(uuid())
+  // Lotus blocks synced
+  blocks Int @default(1)
+  // Lotus supply in Satoshis; first block yielded 260,000,000
+  supplyTotal BigInt @default(260000000)
+  // Total burned Lotus supply in Satoshis (OP_RETURN + burned fees)
+  burnedTotal BigInt @default(0)
+  // Total non-coinbase transactions
+  txsTotal Int @default(0)
+}
+
+model Block {
+  // block hash
+  id String @id
+  // block height
+  height Int
+  // block timestamp
+  timestamp BigInt
+  // block difficulty
+  difficulty BigInt
+  // block miner address
+  minedBy String
+  // total subsidy
+  subsidy BigInt
+  // total burned
+  burned BigInt
+  // total transactions, including coinbase
+  numTxs Int @default(1)
+}
+
+  // Plot data for burned rates
+model BurnedChart {
+  id        String   @id @default(uuid())
+  day Json @default("[]")
+  week Json @default("[]")
+  month Json @default("[]")
+  quarter Json @default("[]")
+  year Json @default("[]")
+  // Burned Lotus supply per day, in satoshis
+  burnedDay BigInt @default(0)
+  // Burned Lotus supply per week, in satoshis
+  burnedWeek BigInt @default(0)
+  // Burned Lotus supply per month, in satoshis
+  burnedMonth BigInt @default(0)
+  // Burned Lotus supply per quarter, in satoshis
+  burnedQuarter BigInt @default(0)
+  // Burned Lotus supply per year, in satoshis
+  burnedYear BigInt @default(0)
+}
+
+// Plot data for inflation rates
+model InflationChart {
+  id        String   @id @default(uuid())
+  // Inflation Chart
+  day Json @default("[]")
+  week Json @default("[]")
+  month Json @default("[]")
+  quarter Json @default("[]")
+  year Json @default("[]")
+  // Inflation rate per day, in satoshis
+  inflationDay BigInt @default(0)
+  // Inflation rate per week, in satoshis
+  inflationWeek BigInt @default(0)
+  // Inflation rate per month, in satoshis
+  inflationMonth BigInt @default(0)
+  // Inflation rate per quarter, in satoshis
+  inflationQuarter BigInt @default(0)
+  // Inflation rate per year, in satoshis
+  inflationYear BigInt @default(0)
+}
+
+// Plot data for non-coinbase transaction rates
+model TransactionsChart {
+  id        String   @id @default(uuid())
+  // TXs Chart
+  day Json @default("[]")
+  week Json @default("[]")
+  month Json @default("[]")
+  quarter Json @default("[]")
+  year Json @default("[]")
+  // Total non-coinbase transactions per day
+  txsDay Int @default(0)
+  // Total non-coinbase transactions per week
+  txsWeek Int @default(0)
+  // Total non-coinbase transactions per month
+  txsMonth Int @default(0)
+  // Total non-coinbase transactions per quarter
+  txsQuarter Int @default(0)
+  // Total non-coinbase transactions per year
+  txsYear Int @default(0)
+}

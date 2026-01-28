@@ -1,0 +1,3 @@
+[submodule "submodules/lotus-nng-client"]
+	path = submodules/lotus-nng-client
+	url = https://github.com/LotusiaStewardship/lotus-nng-client

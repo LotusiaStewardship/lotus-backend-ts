@@ -1,11 +1,26 @@
 {
   "name": "lotus-backend-ts",
   "version": "0.1.0",
-  "description": "General backend services for the Lotusia ecosystem",
+  "description": "General backend indexing and API services for the Lotusia ecosystem",
   "main": ".output/index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf .output && tspc",
+    "build:watch": "tsc --watch",
+    "start": "node .output/index.js",
+    "dev": "tsc --watch",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "clean": "rm -rf .output",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
@@ -18,14 +33,20 @@
   },
   "homepage": "https://github.com/LotusiaStewardship/lotus-backend-ts#readme",
   "devDependencies": {
+    "@types/express": "5.0.6",
     "@types/node": "24.0.12",
     "prettier": "3.6.2",
     "prisma": "6.11.1",
+    "ts-patch": "3.3.0",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.36.0"
+    "typescript-eslint": "8.36.0",
+    "typescript-transform-paths": "3.5.6"
   },
   "dependencies": {
     "@prisma/client": "6.11.1",
+    "chronik-client": "0.19.0",
+    "dotenv": "17.2.3",
+    "express": "5.2.1",
     "lotus-nng-client": "file:submodules/lotus-nng-client",
     "xpi-ts": "0.2.10"
   }

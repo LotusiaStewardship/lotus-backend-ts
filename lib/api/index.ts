@@ -8,6 +8,7 @@ import express, {
   NextFunction,
   json,
 } from 'express'
+import rateLimit from 'express-rate-limit'
 import { APIConfig } from '../../utils/types.js'
 
 /**
@@ -53,10 +54,26 @@ export class API extends EventEmitter {
    * Creates a new API instance
    * @param routers - Array of configured routers with their URI paths
    */
-  constructor(routers: ConfiguredRouter[]) {
+  constructor(routers: ConfiguredRouter[], config: APIConfig) {
     super()
     this.app = express()
     this.app.use(json())
+    const limiter = rateLimit({
+      windowMs: config.rateLimitWindowMinutes * 60 * 1000,
+      max: config.rateLimitMaxRequests,
+      standardHeaders: true,
+      legacyHeaders: false,
+      skip: (req) => {
+        return false
+      },
+      handler: (req, res) => {
+        res.status(HTTP.FORBIDDEN).json({
+          error: 'Too many requests, please try again later.',
+        })
+      },
+    })
+
+    this.app.use(limiter)
 
     this.router = Router()
     for (const { uri, router } of routers) {

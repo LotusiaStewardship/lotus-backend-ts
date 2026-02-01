@@ -10,7 +10,7 @@ const routers = [
 
 // Initialize and start the API server
 // TODO: set up cluster mode for production readiness
-const api = new API(routers)
+const api = new API(routers, config.api)
 api.start(config.api)
 
 // Register shutdown handlers for graceful termination

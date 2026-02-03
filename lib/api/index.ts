@@ -8,6 +8,7 @@ import express, {
   NextFunction,
   json,
 } from 'express'
+import rateLimit from 'express-rate-limit'
 import { APIConfig } from '../../utils/types.js'
 
 /**
@@ -53,10 +54,25 @@ export class API extends EventEmitter {
    * Creates a new API instance
    * @param routers - Array of configured routers with their URI paths
    */
-  constructor(routers: ConfiguredRouter[]) {
+  constructor(routers: ConfiguredRouter[], config: APIConfig) {
     super()
     this.app = express()
     this.app.use(json())
+
+    // Add API rate limiting config
+    this.app.use(
+      rateLimit({
+        windowMs: config.rateLimitWindowMinutes * 60 * 1000,
+        limit: config.rateLimitMaxRequests, // `max` was renamed to `limit` in express-rate-limit v7
+        standardHeaders: true,
+        legacyHeaders: false,
+        skip: () => {
+          // return "false" to NOT skip rate limiting quota for each client
+          return false
+        },
+        handler: sendRateLimitExceededJSON,
+      }),
+    )
 
     this.router = Router()
     for (const { uri, router } of routers) {
@@ -104,4 +120,15 @@ export function sendJSON(res: Response, data: object, statusCode?: HTTP) {
     .contentType('application/json')
     .status(statusCode ?? HTTP.OK)
     .json(data)
+}
+
+/**
+ * Sends a rate limit JSON error response to the client
+ * @param req Express Request object (unused but required for express-rate-limit handler signature)
+ * @param res Express Response object to send the error response
+ */
+export function sendRateLimitExceededJSON(_req: Request, res: Response) {
+  res.contentType('application/json').status(HTTP.FORBIDDEN).json({
+    error: '401 Too many requests, please try again later.',
+  })
 }

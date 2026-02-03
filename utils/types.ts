@@ -6,6 +6,10 @@ export interface APIConfig {
   listenAddress: string
   /** The port the API server will listen on */
   listenPort: number
+  /** Rate limit: time window in minutes */
+  rateLimitWindowMinutes: number
+  /** Rate limit: maximum requests per window per IP */
+  rateLimitMaxRequests: number
 }
 
 /**

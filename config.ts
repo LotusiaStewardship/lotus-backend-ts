@@ -49,6 +49,12 @@ class EnvironmentParser {
       api: {
         listenAddress: this.env?.parsed?.API_LISTEN_ADDRESS || '0.0.0.0',
         listenPort: parseInt(this.env?.parsed?.API_LISTEN_PORT || '3000'),
+        rateLimitWindowMinutes: parseInt(
+          this.env?.parsed?.API_RATE_LIMIT_WINDOW_MINUTES || '1',
+        ),
+        rateLimitMaxRequests: parseInt(
+          this.env?.parsed?.API_RATE_LIMIT_MAX_REQUESTS || '1000',
+        ),
       },
       rpc: {
         address: this.env?.parsed?.JSONRPC_ADDRESS || '127.0.0.1',

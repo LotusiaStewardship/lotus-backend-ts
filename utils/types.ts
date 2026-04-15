@@ -33,3 +33,13 @@ export interface ChronikConfig {
   /** The URL of the Chronik indexer service */
   url: string
 }
+
+/**
+ * Configuration options for NNG socket connections
+ */
+export interface NNGConfig {
+  /** Path to the NNG pub/sub socket for block/mempool notifications */
+  pubSocketPath: string
+  /** Path to the NNG RPC socket for block requests */
+  rpcSocketPath: string
+}

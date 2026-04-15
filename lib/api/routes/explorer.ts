@@ -16,18 +16,32 @@ import type {
 import type { TransactionOutputRANK } from 'xpi-ts/lib/rank'
 import type { PeerInfo } from 'xpi-ts/lib/rpc'
 
+/**
+ * Represents a response from the address API.
+ */
 interface AddressResponse {
+  /** The type of script associated with this address. */
   scriptType: ScriptType
+  /** The payload of the script associated with this address. */
   scriptPayload: string
+  /** The balance associated with this address, if requested. */
   balance?: string
+  /** The date and time when this address was last seen, if available. */
   lastSeen: string | null
+  /** Information about the transactions associated with this address. */
   history: {
+    /** The transactions associated with this address. */
     txs: Tx[]
+    /** The total number of pages of transactions associated with this address. */
     numPages: number
   }
 }
 
+/**
+ * Represents a Chronik block with extra information about the miner.
+ */
 type ExplorerBlock = Block & {
+  /** The address of the miner who mined this block. */
   minedBy: string
 }
 
@@ -165,7 +179,7 @@ router.get('/overview', async (req, res) => {
     }
 
     // Remove the port from the peer address
-    const [ip] = peer.addr.split(/\:\d{1,5}$/)
+    const [ip] = peer.addr.split(/:\d{1,5}$/)
     if (!ip) continue
     if (GEOIP_CACHE.has(ip)) {
       peers.push({

@@ -1,14 +1,16 @@
 import { config as dotenv } from 'dotenv'
-import { APIConfig, JSONRPCConfig, ChronikConfig } from './utils/types.js'
+import { APIConfig, JSONRPCConfig, ChronikConfig, NNGConfig } from './utils/types.js'
 import type { DotenvConfigOutput } from 'dotenv'
+import os from 'node:os'
 
 /**
- * Main configuration interface combining API, RPC, and Chronik settings
+ * Main configuration interface combining API, RPC, Chronik, and NNG settings
  */
 interface Config {
   api: APIConfig
   rpc: JSONRPCConfig
   chronik: ChronikConfig
+  nng: NNGConfig
 }
 
 /**
@@ -42,7 +44,7 @@ class EnvironmentParser {
   /**
    * Parses environment variables into a typed Config object
    * @private
-   * @returns Config object with api, rpc, and chronik configuration
+   * @returns Config object with api, rpc, chronik, and nng configuration
    */
   private parseEnvironment(): Config {
     return {
@@ -64,6 +66,14 @@ class EnvironmentParser {
       },
       chronik: {
         url: this.env?.parsed?.CHRONIK_URL || 'https://chronik.lotusia.org',
+      },
+      nng: {
+        pubSocketPath:
+          this.env?.parsed?.NNG_PUB_SOCKET_PATH ||
+          `${os.homedir()}/.lotus/pub.pipe`,
+        rpcSocketPath:
+          this.env?.parsed?.NNG_RPC_SOCKET_PATH ||
+          `${os.homedir()}/.lotus/rpc.pipe`,
       },
     }
   }
